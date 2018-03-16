@@ -2,7 +2,22 @@
 
 	<div class="page">
 		<message ref="message"></message>
-		<headers tabname="零食商店" @increment="dothing">零食商店</headers>
+		<div class="head">
+			<span>Yiton.net</span>
+			<search
+    @result-click="resultClick"
+    @on-change="getResult"
+    :results="results"
+    v-model="value"
+    position="absolute"
+    auto-scroll-to-top top="46px"
+    @on-focus="onFocus"
+    @on-cancel="onCancel"
+    @on-submit="onSubmit"
+    ref="search"></search>
+			
+			<span>中文</span>
+		</div>
 		<transition :name="slidename">
 			<div class="container" v-show="mainarea">
 				<!-- Swiper -->
@@ -65,9 +80,11 @@
 	import '../../static/css/swiper.min.css';
 	import Swiper from '../../static/js/swiper.min';
 	import { mapGetters, mapMutations } from 'vuex';
-
+	import Vue from 'vue'
+	import { Search } from 'vux'
+	Vue.use(Search)
 	export default {
-
+		
 		data() {
 			return {
 				bannerList: [],
@@ -75,12 +92,14 @@
 				cartLength: 0,
 				slidename: 'slide-back',
 				mainarea: false,
+				value:"输入商品"
 			}
 		},
 		components: {
 			Headers,
 			Footers,
-			Message
+			Message,
+			Search
 		},
 		computed: {
 			...mapGetters([
@@ -112,6 +131,31 @@
 		},
 		methods: {
 			
+			setFocus () {
+		      	this.$refs.search.setFocus()
+		    },
+		    resultClick (item) {
+		      	window.alert('you click the result item: ' + JSON.stringify(item))
+		    },
+		    getResult (val) {
+		      	console.log('on-change', val)
+		      	this.results = val ? getResult(this.value) : []
+		    },
+		    onSubmit () {
+		      	this.$refs.search.setBlur()
+		      	this.$vux.toast.show({
+			        type: 'text',
+			        position: 'top',
+			        text: 'on submit'
+		      	})
+		    },
+		    onFocus () {
+		      	console.log('on focus')
+		    },
+		    onCancel () {
+		      	console.log('on cancel')
+		    },
+			
 			/*header子组件向父组件传值*/
 			dothing(data){
 				console.log(data?data:"没有值！");
@@ -120,11 +164,10 @@
 			getGoodsList() {
 				const that = this;
 				this.$http.get('/api/homedata').then(function(res) {
-						that.productList = res.data.data;
-					})
-					.catch(function(error) {
-						console.log(error);
-					});
+					that.productList = res.data.data;
+				}).catch(function(error) {
+					console.log(error);
+				});
 			},
 			/*获取轮播列表*/
 			getBannerList() {

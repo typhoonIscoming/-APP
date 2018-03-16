@@ -1,20 +1,24 @@
 <template>
 	<header id="headerTab">
-		<p @click="changeParent">{{tabname}}</p>
+		<p @click="changeParent">{{tabname}} </p>
 	</header>
 </template>
 
 <script>
+	
+	import { Search } from 'vux'
 	export default {
+		components:{
+			Search
+		},
 		props: ['tabname'],
 		data() {
 			return {
-
 			}
 		},
 		methods:{
 			changeParent(){
-				this.$emit("increment");
+				this.$emit("increment",123);
 			}
 		}
 	}

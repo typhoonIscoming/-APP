@@ -7,6 +7,13 @@ import VueAwesomeSwiper from 'vue-awesome-swiper'
 import axios from 'axios'
 import VueLazyLoad from 'vue-lazyload'
 import fastclick from 'fastclick'
+
+import { Search } from 'vux'
+import VueRouter from 'vue-router'
+
+Vue.use(VueRouter)
+Vue.use(Search)
+
 var VueTouch = require('vue-touch')
 require('../mock')
 fastclick.attach(document.body) //解决移动端点击事件200ms延迟
@@ -26,6 +33,9 @@ Vue.use(VueLazyLoad, {                //懒加载声明错误图和占位图
   loading: './static/img/github.png',
   attempt:3
 })
+
+
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
