@@ -17,7 +17,7 @@
 				if(this.messageShow) {
 					setTimeout(() => {
 						this.messageShow = false;
-					}, 800)
+					}, 2000)
 				}
 			}
 		}

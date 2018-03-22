@@ -3,23 +3,35 @@
 	<div class="page">
 		<message ref="message"></message>
 		<div class="head">
-			<span>Yiton.net</span>
-			<search
-    @result-click="resultClick"
-    @on-change="getResult"
-    :results="results"
-    v-model="value"
-    position="absolute"
-    auto-scroll-to-top top="46px"
-    @on-focus="onFocus"
-    @on-cancel="onCancel"
-    @on-submit="onSubmit"
-    ref="search"></search>
-			
-			<span>中文</span>
+			<div style="width: 100%;height: 0.4rem;display: flex;align-items: center;justify-content: space-around;">
+			<div class="logo">
+				<span style="background: url(../../static/img/system/logo.jpg)no-repeat center center;"></span>
+			</div>
+			<input class="search" placeholder="搜索目的地/游记" />
+			</div>
 		</div>
-		<transition :name="slidename">
-			<div class="container" v-show="mainarea">
+		<transition-Group :name="slidename" class="contentBox">
+			<div key=1 style="width: 100%;height: 120px;">
+				
+				<swiper :options="swiperOption" ref="mySwiper" >
+			    	<!-- slides -->
+				    <swiper-slide>I'm Slide 1</swiper-slide>
+				    <swiper-slide>I'm Slide 2</swiper-slide>
+				    <swiper-slide>I'm Slide 3</swiper-slide>
+				    <swiper-slide>I'm Slide 4</swiper-slide>
+				    <swiper-slide>I'm Slide 5</swiper-slide>
+				    <swiper-slide>I'm Slide 6</swiper-slide>
+				    <swiper-slide>I'm Slide 7</swiper-slide>
+				    <!-- Optional controls -->
+				    <div class="swiper-pagination"  slot="pagination"></div>
+				    <!--<div class="swiper-button-prev" slot="button-prev"></div>
+				    <div class="swiper-button-next" slot="button-next"></div>-->
+				    <div class="swiper-scrollbar"   slot="scrollbar" style="height: 0px;"></div>
+			  	</swiper>
+				
+			</div>
+			
+			<div class="container" v-show="mainarea" key=2>
 				<!-- Swiper -->
 				<div class="swiper-container">
 					<div class="swiper-wrapper">
@@ -67,7 +79,7 @@
 				</div>
 
 			</div>
-		</transition>
+		</transition-Group>
 		<footers :urlRouter="$route.path" :cartnum='cartLength' ref="footer"></footers>
 	</div>
 
@@ -79,10 +91,13 @@
 	import Message from './base/Message.vue';
 	import '../../static/css/swiper.min.css';
 	import Swiper from '../../static/js/swiper.min';
+	
+	import { swiper, swiperSlide } from 'vue-awesome-swiper'
+	
 	import { mapGetters, mapMutations } from 'vuex';
 	import Vue from 'vue'
 	import { Search } from 'vux'
-	Vue.use(Search)
+//	Vue.use(swiper)
 	export default {
 		
 		data() {
@@ -92,14 +107,36 @@
 				cartLength: 0,
 				slidename: 'slide-back',
 				mainarea: false,
-				value:"输入商品"
+				value:"输入商品",
+				results:[],
+				swiperOption: {//以下配置不懂的，可以去swiper官网看api，链接http://www.swiper.com.cn/api/
+          // notNextTick是一个组件自有属性，如果notNextTick设置为true，组件则不会通过NextTick来实例化swiper，也就意味着你可以在第一时间获取到swiper对象，<br>假如你需要刚加载遍使用获取swiper对象来做什么事，那么这个属性一定要是true
+          			direction: 'horizontal',//vertical
+		          	notNextTick: true,
+		          // swiper configs 所有的配置同swiper官方api配置
+		          	autoplay: 3000,
+		          	grabCursor : true,
+		          	setWrapperSize :true,
+		          	autoHeight: true,
+		          	pagination : '.swiper-pagination',
+		          	paginationClickable :true,
+//		          	prevButton:'.swiper-button-prev',//上一张
+//		          	nextButton:'.swiper-button-next',//下一张
+		          	scrollbar:'.swiper-scrollbar',//滚动条
+		          	mousewheelControl : true,
+		          	observeParents:true,
+		          // 如果自行设计了插件，那么插件的一些配置相关参数，也应该出现在这个对象中，如下debugger
+		          	debugger: true,
+		        }
 			}
 		},
 		components: {
 			Headers,
 			Footers,
 			Message,
-			Search
+			Search,
+			swiper,
+			swiperSlide
 		},
 		computed: {
 			...mapGetters([
@@ -111,14 +148,35 @@
 			this.mainarea = true;
 			setTimeout(() => {
 				const swiper = new Swiper('.swiper-container', {
-					pagination: '.swiper-pagination',
-					paginationClickable: true,
-					spaceBetween: 30,
-					autoplay: 1500,
-					effect: 'fade',
+//					pagination: '.swiper-pagination',
+//					paginationClickable: true,
+//					spaceBetween: 30,
+//					autoplay: 1500,
+//					effect: 'fade',
+
+
+
+
+
+					direction: 'horizontal',//vertical
+		          	notNextTick: true,
+		          // swiper configs 所有的配置同swiper官方api配置
+		          	autoplay: 3000,
+		          	grabCursor : true,
+		          	setWrapperSize :true,
+		          	autoHeight: true,
+		          	pagination : '.swiper-pagination',
+		          	paginationClickable :true,
+//		          	prevButton:'.swiper-button-prev',//上一张
+//		          	nextButton:'.swiper-button-next',//下一张
+		          	scrollbar:'.swiper-scrollbar',//滚动条
+		          	mousewheelControl : true,
+		          	observeParents:true,
+		          // 如果自行设计了插件，那么插件的一些配置相关参数，也应该出现在这个对象中，如下debugger
+		          	debugger: true,
 				});
 
-			}, 200);
+			}, 1000);
 			this.getGoodsList();
 			this.getBannerList();
 			/*判断动画是进还是出*/
@@ -229,6 +287,7 @@
 	}
 	.container{
 		padding-bottom: 0;
+		/*padding: 0;*/
 	}
 	.productTop {
 		padding: 0 .2rem;
@@ -273,5 +332,57 @@
 			height: .4rem;
 			padding-right: .2rem;
 		}
+	}
+	.contentBox{
+		width: 100%;
+		margin-top: 0.8rem;
+	}
+	
+	.page{
+		position: relative;
+	}
+	
+	.head{
+		width: 100%;
+		height: 0.8rem;
+		background: #e95c53;
+		display: flex;
+		align-items: center;
+		position: fixed;
+		left: 0;
+		top: 0;
+		z-index: 99;
+	}
+	.logo{
+		width: 20%;
+		height: 0.7rem;
+	}
+	.logo>span{
+		display: inline-block;
+		width: 100%;
+		height: 0.7rem;
+	}
+	.search{
+		width: 4.5rem;
+		padding-left: 5px;
+		height: 0.5rem;
+		border-radius: 5px;
+		background: #d5372c;
+		border: 0;
+		outline: none;
+		font-size: 0.2rem;
+		color: white;
+		text-align: center;
+	}
+	.search::-webkit-input-placeholder{
+	    color: white;
+	}
+	.swiper-container {
+	    width: 100%;
+	    height: 100%;
+	}
+	.swiper-slide{
+		background: white;
+		text-align: center;
 	}
 </style>

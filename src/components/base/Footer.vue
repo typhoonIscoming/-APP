@@ -11,14 +11,14 @@
 		<div class="footer-item" :class="{active:urlRouter == '/category'}">
 			<router-link to='./category'>
 				<i class="icon footerIcon footerCategoryIcon"></i>
-				<p class="footer-title">分类</p>
+				<p class="footer-title">探索</p>
 			</router-link>
 		</div>
 
 		<div class="footer-item" :class="{active:urlRouter == '/cart'}">
 			<router-link to='./cart'>
 				<i class="icon footerIcon footerCartIcon"></i>
-				<p class="footer-title">购物车</p>
+				<p class="footer-title">社区</p>
 			</router-link>
 			<transition name="bullet">
 				<div class="cart-num" v-show="showNum">{{cartnum}}</div>

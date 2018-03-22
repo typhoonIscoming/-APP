@@ -307,7 +307,7 @@
 		font-size: .28rem;
 		width: 100%;
 		position: absolute;
-		bottom: .8rem;
+		bottom: .88rem;
 		color: @base_color;
 		background: @theme_background;
 		/*background:red;*/
