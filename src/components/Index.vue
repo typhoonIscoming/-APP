@@ -11,10 +11,9 @@
 			</div>
 		</div>
 		<transition-Group :name="slidename" class="contentBox">
-			<div key=1 style="width: 100%;height: 120px;">
+			<div key=1 style="width: 100%;height: 200px;">
 				
 				<swiper :options="swiperOption" ref="mySwiper" >
-			    	<!-- slides -->
 				    <swiper-slide>I'm Slide 1</swiper-slide>
 				    <swiper-slide>I'm Slide 2</swiper-slide>
 				    <swiper-slide>I'm Slide 3</swiper-slide>
@@ -22,18 +21,16 @@
 				    <swiper-slide>I'm Slide 5</swiper-slide>
 				    <swiper-slide>I'm Slide 6</swiper-slide>
 				    <swiper-slide>I'm Slide 7</swiper-slide>
-				    <!-- Optional controls -->
 				    <div class="swiper-pagination"  slot="pagination"></div>
 				    <!--<div class="swiper-button-prev" slot="button-prev"></div>
 				    <div class="swiper-button-next" slot="button-next"></div>-->
-				    <div class="swiper-scrollbar"   slot="scrollbar" style="height: 0px;"></div>
+				    <div class="swiper-scrollbar"   slot="scrollbar"></div>
 			  	</swiper>
 				
 			</div>
 			
 			<div class="container" v-show="mainarea" key=2>
-				<!-- Swiper -->
-				<div class="swiper-container">
+				<div class="swiper-container" v-show="false">
 					<div class="swiper-wrapper">
 						<div class="swiper-slide" v-for="bannerItem in bannerList">
 							<img :src="bannerItem.img" />
@@ -114,7 +111,7 @@
           			direction: 'horizontal',//vertical
 		          	notNextTick: true,
 		          // swiper configs 所有的配置同swiper官方api配置
-		          	autoplay: 3000,
+		          	autoplay: 1000,
 		          	grabCursor : true,
 		          	setWrapperSize :true,
 		          	autoHeight: true,
@@ -125,8 +122,7 @@
 		          	scrollbar:'.swiper-scrollbar',//滚动条
 		          	mousewheelControl : true,
 		          	observeParents:true,
-		          // 如果自行设计了插件，那么插件的一些配置相关参数，也应该出现在这个对象中，如下debugger
-		          	debugger: true,
+		          	debugger: true // 如果自行设计了插件，那么插件的一些配置相关参数，也应该出现在这个对象中，如下debugger
 		        }
 			}
 		},
@@ -145,38 +141,34 @@
 			])
 		},
 		mounted() {
+			var that=this;
 			this.mainarea = true;
-			setTimeout(() => {
-				const swiper = new Swiper('.swiper-container', {
-//					pagination: '.swiper-pagination',
-//					paginationClickable: true,
-//					spaceBetween: 30,
-//					autoplay: 1500,
+			
+			const swiper = new Swiper('.swiper-container', {
+				pagination: '.swiper-pagination',
+				paginationClickable: true,
+				spaceBetween: 0,
+				autoplay: 3000,
 //					effect: 'fade',
+				
+				loop:true,
+//					direction: 'horizontal',//vertical
+//		          	notNextTick: true,
+//		          	autoplay: 3000,
+//		          	grabCursor : true,
+//		          	setWrapperSize :true,
+//		          	autoHeight: true,
+//		          	pagination : '.swiper-pagination',
+//		          	paginationClickable :true,
+////		          	prevButton:'.swiper-button-prev',//上一张
+////		          	nextButton:'.swiper-button-next',//下一张
+//		          	scrollbar:'.swiper-scrollbar',//滚动条
+//		          	mousewheelControl : true,
+//		          	observeParents:true,
+//		          // 如果自行设计了插件，那么插件的一些配置相关参数，也应该出现在这个对象中，如下debugger
+//		          	debugger: true,
+			})
 
-
-
-
-
-					direction: 'horizontal',//vertical
-		          	notNextTick: true,
-		          // swiper configs 所有的配置同swiper官方api配置
-		          	autoplay: 3000,
-		          	grabCursor : true,
-		          	setWrapperSize :true,
-		          	autoHeight: true,
-		          	pagination : '.swiper-pagination',
-		          	paginationClickable :true,
-//		          	prevButton:'.swiper-button-prev',//上一张
-//		          	nextButton:'.swiper-button-next',//下一张
-		          	scrollbar:'.swiper-scrollbar',//滚动条
-		          	mousewheelControl : true,
-		          	observeParents:true,
-		          // 如果自行设计了插件，那么插件的一些配置相关参数，也应该出现在这个对象中，如下debugger
-		          	debugger: true,
-				});
-
-			}, 1000);
 			this.getGoodsList();
 			this.getBannerList();
 			/*判断动画是进还是出*/
@@ -380,6 +372,11 @@
 	.swiper-container {
 	    width: 100%;
 	    height: 100%;
+	    div{
+	    	div{
+	    		height: 375px;
+	    	}
+	    }
 	}
 	.swiper-slide{
 		background: white;

@@ -16,6 +16,10 @@ Mock.mock('/api/bannerdata', (req, res) => {
 		{
 			"id": "3",
 			"img": "./static/img/goods/swipe_1.jpg"
+		},
+		{
+			"id": "4",
+			"img": "./static/img/goods/home_floor_two_6.jpg"
 		}
 			]}
 })
