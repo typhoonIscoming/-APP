@@ -14,7 +14,7 @@
 			<div key=1 style="width: 100%;height: 200px;">
 				
 				<swiper :options="swiperOption" ref="mySwiper" >
-				    <swiper-slide>I'm Slide 1</swiper-slide>
+				    <swiper-slide>I'm Slide 1 page one</swiper-slide>
 				    <swiper-slide>I'm Slide 2</swiper-slide>
 				    <swiper-slide>I'm Slide 3</swiper-slide>
 				    <swiper-slide>I'm Slide 4</swiper-slide>
@@ -24,7 +24,7 @@
 				    <div class="swiper-pagination"  slot="pagination"></div>
 				    <!--<div class="swiper-button-prev" slot="button-prev"></div>
 				    <div class="swiper-button-next" slot="button-next"></div>-->
-				    <div class="swiper-scrollbar"   slot="scrollbar"></div>
+				    <div class="swiper-scrollbar"   slot="scrollbar" v-show="false"></div>
 			  	</swiper>
 				
 			</div>
